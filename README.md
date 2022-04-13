@@ -17,7 +17,7 @@ ___
 
     ```
 
-    *(optional) now to check imagemagick is working , convert a png file to a pdf ,in terminal run 
+    * (optional) now to check imagemagick is working , convert a png file to a pdf ,in terminal run 
         * `convert file.png file.pdf`  
 2. Copy the Quiz_Annotator folder to moodle folder location.
     * ./
