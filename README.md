@@ -1,6 +1,6 @@
 # Quiz Annotator for MOODLE
 
-Using this teacher can annotate essay type qeustion in quiz.
+Using this teacher can annotate essay type question in quiz.
 ___
 
 ## Steps to add Quiz Annotator
@@ -19,11 +19,15 @@ ___
 
     * (optional) now to check imagemagick is working , convert a png file to a pdf ,in terminal run 
         * `convert file.png file.pdf`  
-2. Copy the Quiz_Annotator folder to moodle folder location.
-    * ./
-        * ./moodle
-        * ./quiz_annotator
-        
+2. Copy the moodle_quiz_annotator folder to moodle folder location. Directory structure should be like this-
+    ```bash
+      .
+      ├── moodle/
+      └── moodle_quiz_annotator
+          ├── files/
+          ├── README.md
+          └── Makefile
+    ```
 
 <details><summary> warning </summary>
  
@@ -44,3 +48,4 @@ __Note you might need to change the variable MOODLE in Makefile according to you
 ## Steps to remove Quiz Annotator 
 1. Go to the Quiz_Annotator folder and run 
     * `sudo make restore`
+
