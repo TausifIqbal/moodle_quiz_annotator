@@ -29,7 +29,7 @@ ___
           └── Makefile
     ```
 
-<details><summary> warning </summary>
+<details><summary> :warning: warning </summary>
  
 #### after step 3 these files are going to be changed
     * moodle/quesiton/type/essay/renderer.php
