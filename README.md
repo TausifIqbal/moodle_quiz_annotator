@@ -5,7 +5,7 @@ ___
 
 ## Steps to add Quiz Annotator
 
-1. Install imagemagick in your [machine](https://linoxide.com/install-latest-imagemagick-on-ubuntu-20-04/)
+1. Install imagemagick in your [machine](https://linoxide.com/install-latest-imagemagick-on-ubuntu-20-04/) for unbuntu you can follow this.
     * `sudo apt install imagemagick`
     *  update __rights="none"__ to __rights=read|write__ in __/etc/ImageMagick-6/policy.xml__  for __pattern="pdf"__ , see [this](https://askubuntu.com/questions/1181762/imagemagickconvert-im6-q16-no-images-defined)
     ```xml
@@ -19,14 +19,11 @@ ___
 
     * (optional) now to check imagemagick is working , convert a png file to a pdf ,in terminal run 
         * `convert file.png file.pdf`  
-2. Copy the moodle_quiz_annotator folder to moodle folder location. Directory structure should be like this-
+2. Download the zip file from this repository, extract in and copy the extracted folder moodle_quiz_annotator to the moodle root folder location `/path/to/moodle`. For example in ubuntu directory structure should be like this-
     ```bash
       .
-      ├── moodle/
-      └── moodle_quiz_annotator
-          ├── files/
-          ├── README.md
-          └── Makefile
+      ├── /var/www/html/moodle/
+      └── /var/www/html/moodle_quiz_annotator
     ```
 
 <details><summary> :warning: warning </summary>
@@ -38,14 +35,14 @@ ___
 
  
 
-3. Go to the Quiz_Annotator and in terminal run 
+3. Go to the moodle_quiz_annotator and in terminal run 
     * `sudo make quiz_annotator`
 
-__Note you might need to change the variable MOODLE in Makefile according to your folder name__ 
+__Note you might need to change the variable MOODLE in Makefile according to your folder name if you followed default setting while installing moodle then this is not needed but if you changed the name from moodle to something else then you need to update here the same.__ 
 
 
 
 ## Steps to remove Quiz Annotator 
-1. Go to the Quiz_Annotator folder and run 
+1. Go to the moodle_quiz_qnnotator folder ,open terminal and run 
     * `sudo make restore`
 
