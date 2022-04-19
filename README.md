@@ -5,7 +5,7 @@ ___
 
 ## Steps to add Quiz Annotator
 
-1. Install imagemagick in your [machine](https://linoxide.com/install-latest-imagemagick-on-ubuntu-20-04/) for unbuntu you can follow this.
+1. Install imagemagick in your [machine](https://linoxide.com/install-latest-imagemagick-on-ubuntu-20-04/) for ubuntu you can follow this.
     * `sudo apt install imagemagick`
     *  update __rights="none"__ to __rights=read|write__ in __/etc/ImageMagick-6/policy.xml__  for __pattern="pdf"__ , see [this](https://askubuntu.com/questions/1181762/imagemagickconvert-im6-q16-no-images-defined)
     ```xml
@@ -38,7 +38,7 @@ ___
 3. Go to the moodle_quiz_annotator and in terminal run 
     * `sudo make quiz_annotator`
 
-__Note you might need to change the variable MOODLE in Makefile according to your folder name if you followed default setting while installing moodle then this is not needed but if you changed the name from moodle to something else then you need to update here the same.__ 
+__Note you might need to change the variable MOODLE in Makefile according to your folder name if you followed default settings while installing moodle then this is not needed but if you changed the name from moodle to something else then you need to update here the same.__ 
 
 
 
