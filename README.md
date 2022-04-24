@@ -35,8 +35,9 @@ ___
 
  
 
-3. Go to the moodle_quiz_annotator and in terminal run 
-    * `sudo make quiz_annotator`
+3. Go to the moodle_quiz_annotator and in terminal run , as of now it supports MOODLE_VERSION 3.6 and 3.11
+    * `sudo make quiz_annotator MOODLE_VERSION=x.x` 
+    * for example _sudo make quiz_annotator MOODLE_VERSION=3.6_
 
 __Note you might need to change the variable MOODLE in Makefile according to your folder name if you followed default settings while installing moodle then this is not needed but if you changed the name from moodle to something else then you need to update here the same.__ 
 
