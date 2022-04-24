@@ -1,6 +1,7 @@
 # Quiz Annotator for MOODLE
 
 Using this teacher can annotate essay type question in quiz.
+![demo](/src/demo.gif)
 ___
 
 ## Steps to add Quiz Annotator
