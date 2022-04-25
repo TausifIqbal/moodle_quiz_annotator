@@ -1,0 +1,40 @@
+* new files added in directory /mod/quiz/
+    > annotator.php
+    > upload.php 
+    > myindex.html
+    > mypdfannotate.js
+    > mypdfannotate.css
+    > myscript.js
+    > mystyles.css 
+
+
+
+* modification made in existing files
+
+>in file /question/type/essay/renderer.php
+
+    >>  new function from line 104 to 149
+        qtype_essay_renderer::
+            feedback_files_read_only()
+
+    >>  new function from line 151 to 159
+        qtype_essay_renderer::
+            get_filenames()
+
+    >>  modified function
+        qtype_essay_renderer :: 
+            formulation_and_controls
+            (line no : 73 to 74)we added new variable $annotatedfiles
+            (line no : 80 to 81)we initialized the variable $annotatedfiles
+            by calling $this->feedback_files_read_only($qa, $options)
+            (line no : 95 to 100) we are rendering the annotatedfiles
+
+    
+>in file /mod/quiz/comment.php
+    >>  we removed line 111 to 114 and replaced it with our code
+        from line no 111 to 154
+        the purpose of this is to create a dropdown to
+        show all the attached files and select one of them
+        after selecting it will open that file into a new 
+        annotator by calling the file annotator.php (at iine 123)
+

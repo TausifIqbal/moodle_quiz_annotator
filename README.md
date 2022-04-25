@@ -48,3 +48,21 @@ __Note you might need to change the variable MOODLE in Makefile according to you
 1. Go to the moodle_quiz_qnnotator folder ,open terminal and run 
     * `sudo make restore`
 
+## Changes Made
+    1 Moodle version 3.6 see /3.6/changelog.txt
+    2 Moodle version 3.11 see /3.11/changelog.txt
+## Support for other versions
+    User can go through the changelog and do the following by referring to it.
+
+    add  new files in /mod/quiz/ 
+        * annotator.php
+        * upload.php 
+        * myindex.html
+        * mypdfannotate.js
+        * mypdfannotate.css
+        * myscript.js
+        * mystyles.css 
+
+    modify these files
+        * /mod/quiz/comment.php
+        * /question/type/essay/renderer.php
