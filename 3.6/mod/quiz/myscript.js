@@ -9,7 +9,7 @@ var pdf = new PDFAnnotate("pdf-container", fileurl, {
     ready() {
       // console.log("Plugin initialized successfully");
     },
-    scale: 1,
+    scale: 1.5,
     pageImageCompression: "SLOW", // FAST, MEDIUM, SLOW(Helps to control the new PDF file size)
   });
   
@@ -66,6 +66,8 @@ var pdf = new PDFAnnotate("pdf-container", fileurl, {
   
   function savePDF(event) {
       event.preventDefault();    // changes made
+      // document.getElementById('loader').style.display = "block";
+      // document.getElementById('pdf-container').style.display = "none";
       pdf.savePdf('sample.pdf'); // save with given file name
       return false;    // changes made
   }
@@ -84,4 +86,3 @@ var pdf = new PDFAnnotate("pdf-container", fileurl, {
           pdf.setFontSize(font_size);
       });
   });
-  

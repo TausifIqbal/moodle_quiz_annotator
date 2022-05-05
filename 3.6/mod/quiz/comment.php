@@ -130,7 +130,7 @@ $dropdown = '<select id="dropdown" name="fileno" class="custom-select">';
 $fileno = 0;  // file number (note that it starts with 1 not 0)
 foreach ($files as $file) {
     $fileno = $fileno + 1;
-    $out = $qa->get_response_file_url($file);
+    $out = urldecode($qa->get_response_file_url($file));
     $url = (explode("?", $out))[0];       // remove ?forcedownload=1 from the end of the url
     $filename = end(explode('/', $url));  // split based on "/" and take last element; this would be filename
     $dropdown .= '<option value="' . $fileno . '">' . $filename . '</option>';

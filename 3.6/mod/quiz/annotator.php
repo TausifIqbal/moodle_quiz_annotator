@@ -124,9 +124,9 @@ if($doesExists === true)   // if exists then update $fileurl to the url of this 
     
     // convert that file into PDF, based on mime type (NOTE: this will be created in the cwd)
     if($mimetype === "image")
-        $command = "convert " . $original_file->get_filename() . " -background white -page a5 temp2.pdf";
+        $command = "convert '" . $original_file->get_filename() . "' -background white -page a5 temp2.pdf";
     else
-        $command = "convert TEXT:" . $original_file->get_filename() . " temp2.pdf";
+        $command = "convert TEXT: '" . $original_file->get_filename() . "' temp2.pdf";
 
     shell_exec($command);
 

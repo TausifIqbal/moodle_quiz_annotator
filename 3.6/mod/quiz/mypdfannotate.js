@@ -61,7 +61,7 @@ var PDFAnnotate = function(container_id, url, options = {}) {
 		var inst = this;
 		let canvases = $('#' + inst.container_id + ' canvas')
 	    canvases.each(function (index, el) {
-	        var background = el.toDataURL("image/jpeg","0.1");
+	        var background = el.toDataURL("image/png");
 	        var fabricObj = new fabric.Canvas(el.id, {
 	            freeDrawingBrush: {
 	                width: 1,
@@ -200,7 +200,7 @@ PDFAnnotate.prototype.deleteSelectedObject = function () {
 
 PDFAnnotate.prototype.savePdf = function (fileName) {
 	var inst = this;
-	var doc = new jspdf.jsPDF();
+	var doc = new jspdf.jsPDF('p', 'pt', 'a4', true);
 	if (typeof fileName === 'undefined') {
 		fileName = `${new Date().getTime()}.pdf`;
 	}
@@ -211,11 +211,13 @@ PDFAnnotate.prototype.savePdf = function (fileName) {
 			doc.setPage(index + 1);
 		}
 		doc.addImage(
-			fabricObj.toDataURL({
-				format: 'jpeg'
-			}), 
-			"JPEG",0, 
-			0,doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight(),`page-${index + 1}`, 
+			fabricObj.toDataURL('image/jpeg', 1.0), 
+			inst.pageImageCompression == "NONE" ? "PNG" : "JPEG", 
+			0, 
+			0,
+			doc.internal.pageSize.getWidth(), 
+			doc.internal.pageSize.getHeight(),
+			`page-${index + 1}`, 
 			["FAST", "MEDIUM", "SLOW"].indexOf(inst.pageImageCompression) >= 0
 			? inst.pageImageCompression
 			: undefined
@@ -237,11 +239,11 @@ PDFAnnotate.prototype.savePdf = function (fileName) {
 					alert("file has been saved");
 				}else{
 					console.log(this.readyState, this.status);
-					alert("not able to save file");
+					alert("Not able to save file (File size too big)");
 				}
 			}
 			// a way to pass required parameters to the server
-			params = 'contextid='+contextid + '&attemptid='+attemptid + '&filename='+filename;
+			params = 'contextid='+contextid + '&attemptid='+attemptid + '&filename='+filename + '&maxbytes='+maxbytes;
 			xhr.open( 'post', 'upload.php?'+params, true ); //Post to php Script to save to server
 			xhr.send(data);
 			// Tausif Iqbal, Vishal Rao works end here...
@@ -270,4 +272,3 @@ PDFAnnotate.prototype.setFontSize = function (size) {
 	this.font_size = size;
 	return false;
 }
-
