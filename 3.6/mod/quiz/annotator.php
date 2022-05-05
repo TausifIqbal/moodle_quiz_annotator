@@ -160,7 +160,9 @@ if($doesExists === true)   // if exists then update $fileurl to the url of this 
     $url = (explode("?", $url))[0];     // remove '"forcedownload=1' from the end of the url
     $fileurl = $url;                    // now update $fileurl
 }
-var_dump($fileurl);
+$cid = $attemptobj->get_courseid();
+$course = get_course($cid, false);
+$maxbytes = $course->maxbytes;
 // include the html file; It has all the features of annotator
 include "./myindex.html";
 ?>
@@ -172,5 +174,6 @@ include "./myindex.html";
     var contextid = "<?= $contextid ?>";
     var attemptid = "<?= $attemptid ?>";
     var filename = "<?= $filename ?>"; 
+    var maxbytes = "<?= $maxbytes ?>";
 </script>
 <script type="text/javascript" src="./myscript.js"></script>
