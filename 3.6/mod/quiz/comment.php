@@ -107,6 +107,8 @@ if (data_submitted() && confirm_sesskey()) {
 
 // Print quiz information.
 echo $output->review_summary_table($summarydata, 0);
+
+// Tausif Iqbal, Vishal Rao works start here...
 // Print the comment form.
 $comment_form =  '<form method="post" class="mform" id="manualgradingform" action="' .
         $CFG->wwwroot . '/mod/quiz/comment.php">';
@@ -154,6 +156,7 @@ echo $comment_form;
 echo $que_for_commenting;
 
 ?>
+<!-- Tausif Iqbal, Vishal Rao works end here... -->
 <div>
     <input type="hidden" name="attempt" value="<?php echo $attemptobj->get_attemptid(); ?>" />
     <input type="hidden" name="slot" value="<?php echo $slot; ?>" />

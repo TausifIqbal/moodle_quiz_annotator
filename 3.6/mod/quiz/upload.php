@@ -18,19 +18,39 @@ require_once('locallib.php');
 if(!empty($_FILES['data'])) 
 {
     $data = file_get_contents($_FILES['data']['tmp_name']);
-    $fname = "temp.pdf"; // name the file
-    $file = fopen("./" .$fname, 'w'); // open the file path
-    fwrite($file, $data); //save data
-    fclose($file);
     
     // max file size allowed in the particular course
-    $maxbytes = (int)($_REQUEST['maxbytes']);    // in bytes
+    // $maxbytes = (int)($_REQUEST['maxbytes']);    // in bytes
+    $max_upload = (int)(ini_get('upload_max_filesize'));
+    $max_post = (int)(ini_get('post_max_size'));
+    $memory_limit = (int)(ini_get('memory_limit'));
+    $max_mb = min($max_upload, $max_post, $memory_limit); // in mb
+    $maxbytes = $max_mb*1024*1024; // in bytes
 
     // curr file size
     $fsize = strlen($data);   // in bytes
 
-    if($fsize < $maxbytes)
+    $file2 = fopen("./test.txt", "w");
+    fwrite($file2, $max_upload);
+    fwrite($file2, "\n");
+    fwrite($file2, $max_post);
+    fwrite($file2, "\n");
+    fwrite($file2, $memory_limit);
+    fwrite($file2, "\n");
+    fwrite($file2, $max_mb);
+    fwrite($file2, "\n");
+    fwrite($file2, $maxbytes);
+    fwrite($file2, "\n");
+    fwrite($file2, $fsize);
+    // fclose($file2);
+
+    if(($fsize > 0) && ($maxbytes > 0) && ($fsize < $maxbytes))
     {
+        $fname = "temp.pdf"; // name the file
+        $file = fopen("./" .$fname, 'w'); // open the file path
+        fwrite($file, $data); //save data
+        fclose($file);
+
         $contextid = $_REQUEST['contextid'];
         $attemptid = $_REQUEST['attemptid'];
         $filename = $_REQUEST['filename'];
@@ -63,11 +83,17 @@ if(!empty($_FILES['data']))
     }
     else
     {
+        fwrite($file2, "inner-else");
         throw new Exception("Too big file");
     }
+    fclose($file2);
 } 
 else 
 {
+
+    $file2 = fopen("./test.txt", "w");
+    fwrite($file2, "outer-else");
+    fclose($file2);
     throw new Exception("No data to save");
 }
 ?>

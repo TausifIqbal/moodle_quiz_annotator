@@ -63,7 +63,7 @@ foreach ($files as $file) {
         $mime = $file->get_mimetype();
         $mimetype = (explode("/", $mime))[0];
         $format = end(explode("/", $mime));
-        var_dump($mimetype, $format);
+        var_dump($mime, $mimetype, $format);
         break;
     }
 }
@@ -113,7 +113,7 @@ if($doesExists === true)   // if exists then update $fileurl to the url of this 
         $file->get_filepath() . $file->get_filename(), true);
     $url = (explode("?", $url))[0];     // remove '"forcedownload=1' from the end of the url
     $fileurl = $url;                    // now update $fileurl
-} else if($ispdf == false)
+} else if($ispdf === false)
 {
     // annotated PDF doesn't exists and the original file is not a PDF file
     // so we need to create PDF first and update fileurl to this PDF file
@@ -121,28 +121,57 @@ if($doesExists === true)   // if exists then update $fileurl to the url of this 
     // copy non-pdf file to current working directory
     $path = getcwd();
     $original_file->copy_content_to($path . "/" . $original_file->get_filename());
-    
+    $tempfname = "temp3.pdf";
+    $command = "";
+    // var_dump($format);
+    // $myf = fopen("./foo.txt", "w");
+    // fwrite($myf, $format);
+    // fwrite($myf, "\n");
     // convert that file into PDF, based on mime type (NOTE: this will be created in the cwd)
-    if($mimetype === "image")
-        $command = "convert '" . $original_file->get_filename() . "' -background white -page a5 temp2.pdf";
+    if ($mimetype === "image") {
+        $command = "convert '" . $original_file->get_filename() . "' -background white -page a5 " . $tempfname;//temp3.pdf";
+    } else {
+        $supported = array("plain", "txt", "cpp", "c", "py", "java", "sml", "php", "js", "html", "jsx", "xml", "css", "scss", "md");
+        foreach($supported as $supported_format)
+        {
+            // fwrite($myf, $supported_format);
+            // fwrite($myf, "\n");
+            if($format === $supported_format)
+            {
+                $command = "convert TEXT:'" . $original_file->get_filename() . "' " .$tempfname  ;// temp3.pdf";
+                break;
+            }
+        }
+    }
+    // else
+    // $command = "convert TEXT:" . $original_file->get_filename() . " temp3.pdf";
+    // var_dump($command);
+    if($command != "")
+    {
+        shell_exec($command);
+    }
     else
-        $command = "convert TEXT: '" . $original_file->get_filename() . "' temp2.pdf";
-
-    shell_exec($command);
+    {
+        $command = "rm '" . $original_file->get_filename() . "'";
+        shell_exec($command);
+        throw new Exception("File not supported for annotation");
+    }
 
     // now delete that non-pdf file from current working directory; because we don't need it anymore
-    $command = "rm ./" . $original_file->get_filename();
+    $command = "rm '" . $original_file->get_filename() . "'";
     shell_exec($command);
 
     // create a PDF file in moodle database from the above created PDF file
-    $temppath = "./temp2.pdf";
+    // $temppath = "./temp3.pdf";
+    $temppath= "./".$tempfname;
     $fileinfo = array(
         'contextid' => $contextid,
         'component' => $component,
         'filearea' => $filearea,
         'itemid' => $itemid,
         'filepath' => $filepath,
-        'filename' => $filename);
+        'filename' => $filename
+    );
 
     $fs->create_file_from_pathname($fileinfo, $temppath);   // create file
 
@@ -160,9 +189,14 @@ if($doesExists === true)   // if exists then update $fileurl to the url of this 
     $url = (explode("?", $url))[0];     // remove '"forcedownload=1' from the end of the url
     $fileurl = $url;                    // now update $fileurl
 }
-$cid = $attemptobj->get_courseid();
-$course = get_course($cid, false);
-$maxbytes = $course->maxbytes;
+// var_dump($fileurl);
+// max file size allowed in this course
+$max_upload = (int)(ini_get('upload_max_filesize'));
+$max_post = (int)(ini_get('post_max_size'));
+$memory_limit = (int)(ini_get('memory_limit'));
+$max_mb = min($max_upload, $max_post, $memory_limit); // in mb
+$maxbytes = $max_mb*1024*1024; // in bytes
+var_dump($maxbytes);
 // include the html file; It has all the features of annotator
 include "./myindex.html";
 ?>
