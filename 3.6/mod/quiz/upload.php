@@ -18,6 +18,10 @@ require_once('locallib.php');
 if(!empty($_FILES['data'])) 
 {
     $data = file_get_contents($_FILES['data']['tmp_name']);
+    $fname = "temp.pdf"; // name the file
+    $file = fopen("./" .$fname, 'w'); // open the file path
+    fwrite($file, $data); //save data
+    fclose($file);
     
     // max file size allowed in the particular course
     // $maxbytes = (int)($_REQUEST['maxbytes']);    // in bytes
@@ -27,30 +31,31 @@ if(!empty($_FILES['data']))
     $max_mb = min($max_upload, $max_post, $memory_limit); // in mb
     $maxbytes = $max_mb*1024*1024; // in bytes
 
+    $mdl_maxbytes = $CFG->maxbytes;
+    if($mdl_maxbytes > 0)
+    {
+        $maxbytes = min($maxbytes, $mdl_maxbytes);
+    }
+
     // curr file size
     $fsize = strlen($data);   // in bytes
 
-    $file2 = fopen("./test.txt", "w");
-    fwrite($file2, $max_upload);
-    fwrite($file2, "\n");
-    fwrite($file2, $max_post);
-    fwrite($file2, "\n");
-    fwrite($file2, $memory_limit);
-    fwrite($file2, "\n");
-    fwrite($file2, $max_mb);
-    fwrite($file2, "\n");
-    fwrite($file2, $maxbytes);
-    fwrite($file2, "\n");
-    fwrite($file2, $fsize);
-    // fclose($file2);
+    $file = fopen("./test.txt", "w");
+    fwrite($file, $max_upload);
+    fwrite($file, "\n");
+    fwrite($file, $max_post);
+    fwrite($file, "\n");
+    fwrite($file, $memory_limit);
+    fwrite($file, "\n");
+    fwrite($file, $max_mb);
+    fwrite($file, "\n");
+    fwrite($file, $maxbytes);
+    fwrite($file, "\n");
+    fwrite($file, $fsize);
+    // fclose($file);
 
     if(($fsize > 0) && ($maxbytes > 0) && ($fsize < $maxbytes))
     {
-        $fname = "temp.pdf"; // name the file
-        $file = fopen("./" .$fname, 'w'); // open the file path
-        fwrite($file, $data); //save data
-        fclose($file);
-
         $contextid = $_REQUEST['contextid'];
         $attemptid = $_REQUEST['attemptid'];
         $filename = $_REQUEST['filename'];
@@ -62,6 +67,11 @@ if(!empty($_FILES['data']))
         $temppath = './' . $fname;
 
         $fs = get_file_storage();
+        if($fs === null)
+        {
+            throw new Exception("Error in saving");
+        }
+
         // Prepare file record object
         $fileinfo = array(
             'contextid' => $contextid,
@@ -72,28 +82,34 @@ if(!empty($_FILES['data']))
             'filename' => $filename);
 
         // check if file already exists, then first delete it.
-        $doesExists = $fs->file_exists($contextid, $component, $filearea, $itemid, $filepath, $filename);
-        if($doesExists === true)
+        try
         {
-            $storedfile = $fs->get_file($contextid, $component, $filearea, $itemid, $filepath, $filename);
-            $storedfile->delete();
+            $doesExists = $fs->file_exists($contextid, $component, $filearea, $itemid, $filepath, $filename);
+            if($doesExists === true)
+            {
+                $storedfile = $fs->get_file($contextid, $component, $filearea, $itemid, $filepath, $filename);
+                $storedfile->delete();
+            }
+            // finally save the file (creating a new file)
+            $fs->create_file_from_pathname($fileinfo, $temppath);
         }
-        // finally save the file (creating a new file)
-        $fs->create_file_from_pathname($fileinfo, $temppath);
+        catch (dml_exception $e)
+        {
+            throw new Exception("Error in saving");
+        }
     }
     else
     {
-        fwrite($file2, "inner-else");
+        fwrite($file, "inner-else");
         throw new Exception("Too big file");
     }
-    fclose($file2);
+    fclose($file);
 } 
 else 
 {
-
-    $file2 = fopen("./test.txt", "w");
-    fwrite($file2, "outer-else");
-    fclose($file2);
+    $file = fopen("./test.txt", "w");
+    fwrite($file, "outer-else");
+    fclose($file);
     throw new Exception("No data to save");
 }
 ?>

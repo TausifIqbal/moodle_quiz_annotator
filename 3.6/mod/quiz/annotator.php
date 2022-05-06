@@ -196,6 +196,12 @@ $max_post = (int)(ini_get('post_max_size'));
 $memory_limit = (int)(ini_get('memory_limit'));
 $max_mb = min($max_upload, $max_post, $memory_limit); // in mb
 $maxbytes = $max_mb*1024*1024; // in bytes
+
+$mdl_maxbytes = $CFG->maxbytes;
+if($mdl_maxbytes > 0)
+{
+    $maxbytes = min($maxbytes, $mdl_maxbytes);
+}
 var_dump($maxbytes);
 // include the html file; It has all the features of annotator
 include "./myindex.html";

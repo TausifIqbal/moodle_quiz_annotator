@@ -232,7 +232,7 @@ PDFAnnotate.prototype.savePdf = function (fileName) {
 			console.log("pdf_length: ", pdf_len);
 			console.log("maxbytes: ", maxbytes);
 
-			if(pdf_len < maxbytes )
+			if(pdf_len < maxbytes)
 			{
 				var pdf = doc.output('blob');
 
@@ -247,7 +247,7 @@ PDFAnnotate.prototype.savePdf = function (fileName) {
 						alert("file has been saved");
 					}else{
 						console.log(this.readyState, this.status);
-						alert("Not able to save file (File size too big)");
+						alert("Not able to save file");
 					}
 				}
 				// a way to pass required parameters to the server
