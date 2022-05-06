@@ -37,7 +37,6 @@ var_dump($fileno);
 $PAGE->set_url('/mod/quiz/annotator.php', array('attempt' => $attemptid, 'slot' => $slot, 'fileno' => $fileno));
 
 $attemptobj = quiz_create_attempt_handling_errors($attemptid, $cmid);
-// $attemptobj->preload_all_attempt_step_users();
 
 $que_for_commenting = $attemptobj->render_question_for_commenting($slot);
 
@@ -154,7 +153,9 @@ if($doesExists === true)   // if exists then update $fileurl to the url of this 
     {
         $command = "rm '" . $original_file->get_filename() . "'";
         shell_exec($command);
-        throw new Exception("File not supported for annotation");
+        $parent_url = new moodle_url('/mod/quiz/comment.php', array('attempt' => $attemptid, 'slot' => $slot));
+        throw new moodle_exception('importformatnotimplement', '', $parent_url);
+        // throw new Exception("File not supported for annotation");
     }
 
     // now delete that non-pdf file from current working directory; because we don't need it anymore
@@ -203,6 +204,7 @@ if($mdl_maxbytes > 0)
     $maxbytes = min($maxbytes, $mdl_maxbytes);
 }
 var_dump($maxbytes);
+
 // include the html file; It has all the features of annotator
 include "./myindex.html";
 ?>
