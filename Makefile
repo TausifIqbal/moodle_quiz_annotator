@@ -1,6 +1,6 @@
 .PHONY: all generate restore quiz_annotator build backup check_version
 
-MOODLE="moodle36"
+MOODLE="moodle"
 MOD_QUIZ="mod/quiz"
 MOODLE_VERSION="3.11"
 QUESTION_TYPE_ESSAY="question/type/essay"

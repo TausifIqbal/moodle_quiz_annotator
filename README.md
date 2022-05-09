@@ -1,12 +1,12 @@
-# Quiz Annotator for MOODLE
 
-Using this teacher can annotate essay type question in quiz.
+# Quiz Annotator for MOODLE
+A plugin developed as part of BTP project at IIT Palakkad. Using this plugin, teacher can annotate files uploaded in essay type answers in quiz.
 ![demo](/src/demo.gif)
 ___
 
 ## Steps to add Quiz Annotator
 
-1. Install imagemagick in your [machine](https://linoxide.com/install-latest-imagemagick-on-ubuntu-20-04/) for ubuntu you can follow this.
+1. Install imagemagick in your machine for [ubuntu](https://linoxide.com/install-latest-imagemagick-on-ubuntu-20-04/)  you can follow this.
     * `sudo apt install imagemagick`
     *  update __rights="none"__ to __rights=read|write__ in __/etc/ImageMagick-6/policy.xml__  for __pattern="pdf"__ , see [this](https://askubuntu.com/questions/1181762/imagemagickconvert-im6-q16-no-images-defined)
     ```xml
@@ -66,3 +66,16 @@ __Note you might need to change the variable MOODLE in Makefile according to you
     modify these files
         * /mod/quiz/comment.php
         * /question/type/essay/renderer.php
+
+## The Team
+| Project Mentor     |
+|--------------------|
+| Dr. Jasine Babu    |
+
+
+| Developers         |
+|--------------------|
+|   Vishal Rao       |
+|   Tausif Iqbal     |
+
+Special thanks to Mr. Sumesh K S (Junior Technical Supdt.) & Mr. Neeraj Patil for helping us in testing.
