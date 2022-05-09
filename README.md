@@ -78,4 +78,4 @@ __Note you might need to change the variable MOODLE in Makefile according to you
 |   Vishal Rao       |
 |   Tausif Iqbal     |
 
-Special thanks to Mr. Sumesh K S (Junior Technical Supdt.) & Mr. Neeraj Patil for helping us in testing.
+Special thanks to Mr. Sumesh K S (Technical Supdt.) & Mr. Neeraj Patil for helping us in testing.
